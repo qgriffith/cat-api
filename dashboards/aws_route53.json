@@ -1,0 +1,694 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_POSTGRESQL",
+      "label": "PostgreSQL",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "postgres",
+      "pluginName": "PostgreSQL"
+    }
+  ],
+  "__elements": [
+    {
+      "name": "AWS Account Name",
+      "uid": "MA6efJjnz",
+      "kind": 1,
+      "model": {
+        "datasource": {
+          "type": "postgres",
+          "uid": "${DS_POSTGRESQL}"
+        },
+        "description": "",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "align": "auto",
+              "displayMode": "auto",
+              "inspect": false
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 8
+        },
+        "id": 6,
+        "options": {
+          "footer": {
+            "fields": "",
+            "reducer": [
+              "sum"
+            ],
+            "show": false
+          },
+          "showHeader": true
+        },
+        "pluginVersion": "8.5.5",
+        "targets": [
+          {
+            "datasource": {
+              "type": "postgres",
+              "uid": "${DS_POSTGRESQL}"
+            },
+            "format": "table",
+            "group": [],
+            "metricColumn": "none",
+            "rawQuery": true,
+            "rawSql": "SELECT account_id, aliases FROM aws_accounts WHERE account_id in (${account_id})",
+            "refId": "A",
+            "select": [
+              [
+                {
+                  "params": [
+                    "provisioned_throughput_in_mibps"
+                  ],
+                  "type": "column"
+                }
+              ]
+            ],
+            "table": "aws_efs_filesystems",
+            "timeColumn": "creation_time",
+            "timeColumnType": "timestamp",
+            "where": [
+              {
+                "name": "$__timeFilter",
+                "params": [],
+                "type": "macro"
+              }
+            ]
+          }
+        ],
+        "title": "Account Name",
+        "transparent": true,
+        "type": "table"
+      }
+    }
+  ],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "8.5.5"
+    },
+    {
+      "type": "datasource",
+      "id": "postgres",
+      "name": "PostgreSQL",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "iteration": 1655135648326,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${DS_POSTGRESQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 10,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.5.5",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${DS_POSTGRESQL}"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT COUNT(name) from aws_route53_hosted_zone_resource_record_sets WHERE hosted_zone_cq_id IN (SELECT cq_id from aws_route53_hosted_zones WHERE name IN (${zone}))",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "provisioned_throughput_in_mibps"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "aws_efs_filesystems",
+          "timeColumn": "creation_time",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Total DNS Records",
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${DS_POSTGRESQL}"
+      },
+      "description": "Total Hosted Zones",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 8,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.5.5",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${DS_POSTGRESQL}"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT COUNT(name) from aws_route53_hosted_zones WHERE account_id IN (${account_id})",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "provisioned_throughput_in_mibps"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "aws_efs_filesystems",
+          "timeColumn": "creation_time",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Total Hosted Zones",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${DS_POSTGRESQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "id": 2,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "8.5.5",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${DS_POSTGRESQL}"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT account_id as Account, name as Zone, config_private_zone AS Private FROM aws_route53_hosted_zones WHERE (account_id in (${account_id}) and name in (${zone}))",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "provisioned_throughput_in_mibps"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "aws_route53_hosted_zones",
+          "timeColumn": "creation_time",
+          "timeColumnType": "timestamp",
+          "where": []
+        }
+      ],
+      "title": "Account and Zones",
+      "transparent": true,
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${DS_POSTGRESQL}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
+      "id": 6,
+      "libraryPanel": {
+        "meta": {
+          "connectedDashboards": 0,
+          "created": "2022-06-13T16:00:49.668734301Z",
+          "createdBy": {
+            "avatarUrl": "/avatar/46d229b033af06a191ff2267bca9ae56",
+            "id": 1,
+            "name": "admin"
+          },
+          "folderName": "",
+          "folderUid": "",
+          "updated": "2022-06-13T16:00:49.66873438Z",
+          "updatedBy": {
+            "avatarUrl": "/avatar/46d229b033af06a191ff2267bca9ae56",
+            "id": 1,
+            "name": "admin"
+          }
+        },
+        "name": "AWS Account Name",
+        "uid": "MA6efJjnz",
+        "version": 1
+      },
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "8.5.5",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${DS_POSTGRESQL}"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT account_id, aliases FROM aws_accounts WHERE account_id in (${account_id})",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "provisioned_throughput_in_mibps"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "aws_efs_filesystems",
+          "timeColumn": "creation_time",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Account Name",
+      "transparent": true,
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "${DS_POSTGRESQL}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "resource_records"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 432
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 16
+      },
+      "id": 4,
+      "options": {
+        "footer": {
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "8.5.5",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "${DS_POSTGRESQL}"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT name, type, dns_name, resource_records from aws_route53_hosted_zone_resource_record_sets WHERE hosted_zone_cq_id IN (SELECT cq_id from aws_route53_hosted_zones WHERE name IN (${zone}))",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "provisioned_throughput_in_mibps"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "aws_efs_filesystems",
+          "timeColumn": "creation_time",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Records",
+      "transparent": true,
+      "type": "table"
+    }
+  ],
+  "schemaVersion": 36,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {},
+        "datasource": {
+          "type": "postgres",
+          "uid": "${DS_POSTGRESQL}"
+        },
+        "definition": "SELECT distinct(account_id) from public.aws_route53_hosted_zones;",
+        "description": "AWS Accounts with Hosted Zones",
+        "hide": 0,
+        "includeAll": true,
+        "label": "account_ids",
+        "multi": true,
+        "name": "account_id",
+        "options": [],
+        "query": "SELECT distinct(account_id) from public.aws_route53_hosted_zones;",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 4,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "postgres",
+          "uid": "${DS_POSTGRESQL}"
+        },
+        "definition": "SELECT distinct name from public.aws_route53_hosted_zones;",
+        "description": "Name of the Zone",
+        "hide": 0,
+        "includeAll": true,
+        "label": "zone_name",
+        "multi": true,
+        "name": "zone",
+        "options": [],
+        "query": "SELECT distinct name from public.aws_route53_hosted_zones;",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Route53",
+  "uid": "A9k821C7k",
+  "version": 16,
+  "weekStart": ""
+}
